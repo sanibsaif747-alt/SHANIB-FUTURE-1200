@@ -1219,14 +1219,14 @@ public class MainActivity extends Activity {
         adapter = new ArrayAdapter<Tool>(this, 0, filtered){
             public View getView(int pos, View v, ViewGroup p){
                 if(v==null) v=getLayoutInflater().inflate(R.layout.item_tool,p,false);
-                Tool t=filtered.get(pos);
+                final Tool t=filtered.get(pos);
                 ((TextView)v.findViewById(R.id.name)).setText(t.name);
                 ((TextView)v.findViewById(R.id.cat)).setText(t.cat);
                 ((TextView)v.findViewById(R.id.desc)).setText(t.desc);
                 ((TextView)v.findViewById(R.id.how)).setText("How: "+t.howToUse);
-                EditText input=v.findViewById(R.id.input);
+                final EditText input=v.findViewById(R.id.input);
                 Button run=v.findViewById(R.id.run);
-                TextView out=v.findViewById(R.id.output);
+                final TextView out=v.findViewById(R.id.output);
                 run.setOnClickListener(x->{
                     String target=input.getText().toString().trim();
                     if(target.isEmpty()){ out.setVisibility(View.VISIBLE); out.setText("⚠️ Target required - SHANIB FUTURE 1200"); return; }
