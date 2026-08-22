@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.shanib.future1200'
+    namespace 'com.shanib.future'
     compileSdk 35
 
     defaultConfig {
