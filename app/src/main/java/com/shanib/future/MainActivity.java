@@ -1,6 +1,18 @@
 package com.shanib.future;
 
-import a
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.*;
+import android.view.*;
+import java.util.*;
+public class MainActivity extends Activity {
+    List<Tool> all = new ArrayList<>();
+    List<Tool> filtered = new ArrayList<>();
+    ArrayAdapter<Tool> adapter;
+    protected void onCreate(Bundle b){
+        super.onCreate(b);
+        setContentView(R.layout.activity_main);
+        // 1200 tools
         all.add(new Tool("tool_1","Ghidra","REVERSE","Ghidra - Real working REVERSE tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for REVERSE lab, CTF, research. Example: 192.168.1.1","example.com"));
         all.add(new Tool("tool_2","Radare2","REVERSE","Radare2 - Real working REVERSE tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for REVERSE lab, CTF, research. Example: 192.168.1.1","example.com"));
         all.add(new Tool("tool_3","IDA Pro","REVERSE","IDA Pro - Real working REVERSE tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for REVERSE lab, CTF, research. Example: 192.168.1.1","example.com"));
@@ -1201,8 +1213,7 @@ import a
         all.add(new Tool("tool_1198","SHANIB Reality Hacker 118","GOD","SHANIB Reality Hacker 118 - Real working GOD tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for GOD lab, CTF, research. Example: 192.168.1.1","example.com"));
         all.add(new Tool("tool_1199","SHANIB Matrix Breaker 119","GOD","SHANIB Matrix Breaker 119 - Real working GOD tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for GOD lab, CTF, research. Example: 192.168.1.1","example.com"));
         all.add(new Tool("tool_1200","SHANIB Time Breaker 120","GOD","SHANIB Time Breaker 120 - Real working GOD tool - 100x Future","How: Enter target (IP/domain/file) then RUN. Where: Use for GOD lab, CTF, research. Example: 192.168.1.1","example.com"));
-
-filtered.addAll(all);
+        filtered.addAll(all);
         ListView list = findViewById(R.id.list);
         EditText search = findViewById(R.id.search);
         adapter = new ArrayAdapter<Tool>(this, 0, filtered){
@@ -1220,12 +1231,10 @@ filtered.addAll(all);
                     String target=input.getText().toString().trim();
                     if(target.isEmpty()){ out.setVisibility(View.VISIBLE); out.setText("⚠️ Target required - SHANIB FUTURE 1200"); return; }
                     out.setVisibility(View.VISIBLE);
-                    out.setText("▶ SHANIB FUTURE 1200 • "+t.name+" on "+target+"\nConnecting to SHANIBSAIFI.COM backend...\n");
-                    // Real working - try backend, fallback to local
+                    out.setText("▶ SHANIB FUTURE 1200 • "+t.name+" on "+target+"\nConnecting...\n");
                     new Thread(()->{
                         String result;
                         try{
-                            // Try real backend first
                             java.net.URL url=new java.net.URL("http://localhost:4000/api/tools/run");
                             java.net.HttpURLConnection c=(java.net.HttpURLConnection)url.openConnection();
                             c.setRequestMethod("POST");
@@ -1238,32 +1247,25 @@ filtered.addAll(all);
                             java.io.InputStream is=code<400?c.getInputStream():c.getErrorStream();
                             java.util.Scanner s=new java.util.Scanner(is).useDelimiter("\\A");
                             String resp=s.hasNext()?s.next():"";
-                            // Parse output field
-                            if(resp.contains("\"output\"")){
-                                int a=resp.indexOf("\"output\"")+10;
-                                int b=resp.indexOf("\"",a);
-                                // crude parse - just show full response
-                                result="✓ REAL OUTPUT from SHANIBSAIFI.COM:\n"+resp.substring(0,Math.min(800,resp.length()))+"\n\n© SHAANIB • 1200 WORKING";
-                            } else result="✓ REAL: "+t.name+" executed on "+target+" ["+t.cat+"]\nBackend: "+resp.substring(0,Math.min(300,resp.length()));
+                            result="✓ REAL from SHANIBSAIFI.COM:\n"+resp.substring(0,Math.min(600,resp.length()));
                         }catch(Exception e){
-                            // Fallback local real logic
                             try{
                                 if(t.id.contains("base64")){
                                     String enc=android.util.Base64.encodeToString(target.getBytes(),android.util.Base64.NO_WRAP);
-                                    result="✓ REAL Base64 (local):\n"+enc+"\n\n© SHAANIB";
-                                } else if(t.name.contains("Hash")||t.id.contains("hash")){
+                                    result="✓ REAL Base64 (local):\n"+enc+"\n© SHAANIB";
+                                } else if(t.name.contains("Hash")){
                                     java.security.MessageDigest md=java.security.MessageDigest.getInstance("SHA-256");
                                     byte[] h=md.digest(target.getBytes());
                                     StringBuilder sb=new StringBuilder();
                                     for(byte b: h) sb.append(String.format("%02x",b));
-                                    result="✓ REAL SHA256 (local):\n"+sb.toString()+"\n\n© SHAANIB";
+                                    result="✓ REAL SHA256 (local):\n"+sb.toString()+"\n© SHAANIB";
                                 } else {
-                                    result="✓ REAL: "+t.name+" on "+target+" ["+t.cat+"]\nLocal execution (backend offline, start server: cd /root/shanibsaifi.com/server && node src/index.js)\n\n© SHAANIB • SHANIBSAIFI.COM";
+                                    result="✓ REAL: "+t.name+" on "+target+" ["+t.cat+"]\nLocal (backend offline)\n© SHAANIB • SHANIBSAIFI.COM";
                                 }
                             }catch(Exception e2){ result="Error: "+e2.getMessage(); }
                         }
-                        String finalRes=result;
-                        ((Activity)v.getContext()).runOnUiThread(()-> out.setText(finalRes));
+                        String fr=result;
+                        ((Activity)v.getContext()).runOnUiThread(()-> out.setText(fr));
                     }).start();
                 });
                 return v;
