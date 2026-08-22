@@ -1264,7 +1264,7 @@ public class MainActivity extends Activity {
                                 }
                             }catch(Exception e2){ result="Error: "+e2.getMessage(); }
                         }
-                        String fr=result;
+                        final String fr=result;
                         ((Activity)v.getContext()).runOnUiThread(()-> out.setText(fr));
                     }).start();
                 });
