@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="#0a0a0a">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp" android:background="#111">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="SHANIB FUTURE 1200" android:textColor="#ff0033" android:textSize="20sp" android:textStyle="bold"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="1200 Tools • by SHAANIB • SHANIBSAIFI.COM" android:textColor="#00ff88" android:textSize="11sp"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="All 1200 WORKING • Native" android:textColor="#666" android:textSize="10sp"/>
+        <EditText android:id="@+id/search" android:layout_width="match_parent" android:layout_height="40dp" android:hint="Search 1200..." android:textColor="#fff" android:textColorHint="#666" android:background="#1a1a1a" android:padding="8dp" android:layout_marginTop="8dp"/>
+    </LinearLayout>
+    <ListView android:id="@+id/list" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="4dp"/>
+</LinearLayout>
