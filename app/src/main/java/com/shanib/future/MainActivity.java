@@ -1217,8 +1217,8 @@ public class MainActivity extends Activity {
         ListView list = findViewById(R.id.list);
         EditText search = findViewById(R.id.search);
         adapter = new ArrayAdapter<Tool>(this, 0, filtered){
-            public View getView(int pos, View v, ViewGroup p){
-                if(v==null) v=getLayoutInflater().inflate(R.layout.item_tool,p,false);
+            public View getView(int pos, View convertView, ViewGroup p){
+                final View v = convertView==null ? getLayoutInflater().inflate(R.layout.item_tool,p,false) : convertView;
                 final Tool t=filtered.get(pos);
                 ((TextView)v.findViewById(R.id.name)).setText(t.name);
                 ((TextView)v.findViewById(R.id.cat)).setText(t.cat);
